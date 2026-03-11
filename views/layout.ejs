@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ThreadsBot — Auto Posting & Affiliate</title>
+  <meta name="description" content="Dashboard untuk otomasi posting Threads dengan AI content generation">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <span class="logo-icon">🤖</span>
+        <span class="logo-text">ThreadsBot</span>
+      </div>
+    </div>
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <a href="/" class="nav-link <%= page === 'dashboard' ? 'active' : '' %>" id="nav-dashboard">
+          <span class="nav-icon">📊</span>
+          <span class="nav-label">Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/accounts" class="nav-link <%= page === 'accounts' ? 'active' : '' %>" id="nav-accounts">
+          <span class="nav-icon">👥</span>
+          <span class="nav-label">Akun</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/posts/create" class="nav-link <%= page === 'create-post' ? 'active' : '' %>" id="nav-create-post">
+          <span class="nav-icon">✍️</span>
+          <span class="nav-label">Buat Post</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/queue" class="nav-link <%= page === 'queue' ? 'active' : '' %>" id="nav-queue">
+          <span class="nav-icon">📝</span>
+          <span class="nav-label">Content Queue</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/autopilot" class="nav-link <%= page === 'autopilot' ? 'active' : '' %>" id="nav-autopilot">
+          <span class="nav-icon">🚀</span>
+          <span class="nav-label">Auto Pilot</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/affiliate" class="nav-link <%= page === 'affiliate' ? 'active' : '' %>" id="nav-affiliate">
+          <span class="nav-icon">🛍️</span>
+          <span class="nav-label">Affiliate Product</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/posts/history" class="nav-link <%= page === 'history' ? 'active' : '' %>" id="nav-history">
+          <span class="nav-icon">📋</span>
+          <span class="nav-label">Riwayat</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/settings" class="nav-link <%= page === 'settings' ? 'active' : '' %>" id="nav-settings">
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-label">Pengaturan</span>
+        </a>
+      </li>
+    </ul>
+    <div class="sidebar-footer">
+      <div class="app-version">v1.0.0</div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="topbar">
+      <button class="menu-toggle" id="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+      <h1 class="page-title" id="page-title">
+        <% if (page === 'dashboard') { %>Dashboard<% } %>
+        <% if (page === 'accounts') { %>Manajemen Akun<% } %>
+        <% if (page === 'create-post') { %>Buat Postingan<% } %>
+        <% if (page === 'affiliate') { %>Affiliate Product<% } %>
+        <% if (page === 'autopilot') { %>Auto Pilot<% } %>
+        <% if (page === 'queue') { %>Content Queue<% } %>
+        <% if (page === 'history') { %>Riwayat Postingan<% } %>
+        <% if (page === 'settings') { %>Pengaturan<% } %>
+      </h1>
+    </div>
+
+    <% if (query.error) { %>
+      <div class="alert alert-error" id="alert-error">
+        ⚠️ <%= query.error %>
+      </div>
+    <% } %>
+    <% if (query.success) { %>
+      <div class="alert alert-success" id="alert-success">
+        ✅ <%= query.success %>
+      </div>
+    <% } %>
+
+    <div class="content-area">
+      <%- body %>
+    </div>
+  </main>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

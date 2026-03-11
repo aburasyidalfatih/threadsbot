@@ -1,0 +1,23 @@
+{
+  "name": "threadsbot",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": ["threads", "bot", "auto-posting", "affiliate"],
+  "author": "",
+  "license": "ISC",
+  "description": "ThreadsBot — Auto Posting & Shopee Affiliate Bot for Threads",
+  "dependencies": {
+    "better-sqlite3": "^12.6.2",
+    "dotenv": "^17.3.1",
+    "ejs": "^5.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "node-cron": "^4.2.1",
+    "node-fetch": "^2.7.0",
+    "uuid": "^13.0.0"
+  }
+}

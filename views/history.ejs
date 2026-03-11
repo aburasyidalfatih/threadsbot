@@ -1,0 +1,74 @@
+<%- include('layout', { body: `
+<div class="card" id="history-card">
+  <div class="card-header">
+    <h3>📋 Riwayat Postingan (${totalPosts} total)</h3>
+    ${totalPages > 1 ? '<span class="badge badge-scheduled">Halaman ' + currentPage + '/' + totalPages + '</span>' : ''}
+  </div>
+  <div class="card-body">
+    ${posts.length === 0 ? '<p class="empty-state">Belum ada postingan. <a href="/posts/create">Buat sekarang!</a></p>' : ''}
+    <div class="table-wrapper">
+      ${posts.length > 0 ? '<table class="data-table"><thead><tr><th>Topik</th><th>Tipe</th><th>Akun</th><th>Status</th><th>Komentar</th><th>Dibuat</th><th>Aksi</th></tr></thead><tbody>' + posts.map(post => '<tr>' +
+        '<td><div class="topic-cell">' + (post.topic || '-') + '</div></td>' +
+        '<td><span class="badge badge-type-' + post.type + '">' + post.type + '</span></td>' +
+        '<td>@' + (post.account_username || 'unknown') + '</td>' +
+        '<td><span class="badge badge-' + post.status + '">' + post.status + '</span></td>' +
+        '<td>' + (post.comment_count || 0) + '</td>' +
+        '<td class="time-cell">' + post.created_at + '</td>' +
+        '<td class="action-buttons">' +
+          (post.status === 'failed' ? '<form action="/posts/retry/' + post.id + '" method="POST" style="display:inline"><button type="submit" class="btn btn-sm btn-primary">🔄 Retry</button></form>' : '') +
+          '<button class="btn btn-sm btn-ghost" onclick="showDetail(' + post.id + ')">👁️</button>' +
+          '<form action="/posts/delete/' + post.id + '" method="POST" style="display:inline" onsubmit="return confirm(\'Hapus post ini?\')"><button type="submit" class="btn btn-sm btn-danger">🗑️</button></form>' +
+        '</td>' +
+      '</tr>').join('') + '</tbody></table>' : ''}
+    </div>
+  </div>
+  ${totalPages > 1 ? '<div class="card-footer" style="justify-content:center;gap:8px">' +
+    (currentPage > 1 ? '<a href="/posts/history?page=' + (currentPage - 1) + '" class="btn btn-sm btn-outline">← Sebelumnya</a>' : '') +
+    Array.from({length: totalPages}, (_, i) => '<a href="/posts/history?page=' + (i+1) + '" class="btn btn-sm ' + (i+1 === currentPage ? 'btn-primary' : 'btn-outline') + '">' + (i+1) + '</a>').join('') +
+    (currentPage < totalPages ? '<a href="/posts/history?page=' + (currentPage + 1) + '" class="btn btn-sm btn-outline">Selanjutnya →</a>' : '') +
+  '</div>' : ''}
+</div>
+
+<div class="modal-overlay" id="detail-modal" style="display:none" onclick="if(event.target===this)this.style.display='none'">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>📝 Detail Postingan</h3>
+      <button class="btn btn-ghost" onclick="document.getElementById('detail-modal').style.display='none'">✕</button>
+    </div>
+    <div class="modal-body" id="detail-body"></div>
+  </div>
+</div>
+` }) %>
+
+<script>
+const postsData = <%- JSON.stringify(posts) %>;
+
+function showDetail(postId) {
+  const post = postsData.find(p => p.id === postId);
+  if (!post) return;
+
+  let comments = [];
+  try { comments = JSON.parse(post.content_comments || '[]'); } catch(e) {}
+
+  let html = '<div class="detail-section"><h4>Postingan Utama</h4><div class="detail-content">' + (post.content_main || '-') + '</div></div>';
+  
+  if (comments.length > 0) {
+    html += '<div class="detail-section"><h4>Komentar Lanjutan (' + comments.length + ')</h4>';
+    comments.forEach((c, i) => {
+      html += '<div class="detail-comment"><span class="comment-num">' + (i+1) + '</span> ' + c + '</div>';
+    });
+    html += '</div>';
+  }
+
+  if (post.error_log) {
+    html += '<div class="detail-section detail-error"><h4>Error Log</h4><pre>' + post.error_log + '</pre></div>';
+  }
+
+  if (post.main_post_thread_id) {
+    html += '<div class="detail-section"><h4>Thread ID</h4><code>' + post.main_post_thread_id + '</code></div>';
+  }
+
+  document.getElementById('detail-body').innerHTML = html;
+  document.getElementById('detail-modal').style.display = 'flex';
+}
+</script>

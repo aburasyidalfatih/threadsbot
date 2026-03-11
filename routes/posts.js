@@ -1,0 +1,120 @@
+const express = require('express');
+const router = express.Router();
+const db = require('../config/database');
+const GeminiService = require('../services/gemini');
+const SchedulerService = require('../services/scheduler');
+
+// Create post page
+router.get('/create', (req, res) => {
+  const accounts = db.prepare("SELECT * FROM accounts WHERE is_active = 1").all();
+  const defaultCommentCount = db.prepare("SELECT value FROM settings WHERE key = 'default_comment_count'").get();
+  res.render('create-post', {
+    page: 'create-post',
+    accounts,
+    defaultCommentCount: parseInt(defaultCommentCount?.value || '3', 10)
+  });
+});
+
+// Generate content via AI
+router.post('/generate', async (req, res) => {
+  const { topic, comment_count } = req.body;
+  try {
+    const content = await GeminiService.generatePostContent(topic, parseInt(comment_count || '3', 10));
+    res.json({ success: true, content });
+  } catch (error) {
+    res.json({ success: false, error: error.message });
+  }
+});
+
+// Save as draft
+router.post('/save-draft', (req, res) => {
+  const { account_id, topic, content_main, content_comments, comment_count } = req.body;
+  try {
+    const comments = typeof content_comments === 'string' ? content_comments : JSON.stringify(content_comments);
+    db.prepare(`
+      INSERT INTO posts (account_id, type, topic, content_main, content_comments, comment_count, status)
+      VALUES (?, 'regular', ?, ?, ?, ?, 'draft')
+    `).run(account_id, topic, content_main, comments, parseInt(comment_count || '3', 10));
+    res.json({ success: true });
+  } catch (error) {
+    res.json({ success: false, error: error.message });
+  }
+});
+
+// Post now
+router.post('/post-now', async (req, res) => {
+  const { account_id, topic, content_main, content_comments, comment_count } = req.body;
+  try {
+    const comments = typeof content_comments === 'string' ? content_comments : JSON.stringify(content_comments);
+    const result = db.prepare(`
+      INSERT INTO posts (account_id, type, topic, content_main, content_comments, comment_count, status)
+      VALUES (?, 'regular', ?, ?, ?, ?, 'scheduled')
+    `).run(account_id, topic, content_main, comments, parseInt(comment_count || '3', 10));
+
+    // Execute immediately
+    SchedulerService.executePost(result.lastInsertRowid);
+    res.json({ success: true, postId: result.lastInsertRowid });
+  } catch (error) {
+    res.json({ success: false, error: error.message });
+  }
+});
+
+// Schedule post
+router.post('/schedule', (req, res) => {
+  const { account_id, topic, content_main, content_comments, comment_count, scheduled_at } = req.body;
+  try {
+    const comments = typeof content_comments === 'string' ? content_comments : JSON.stringify(content_comments);
+    const result = db.prepare(`
+      INSERT INTO posts (account_id, type, topic, content_main, content_comments, comment_count, status, scheduled_at)
+      VALUES (?, 'regular', ?, ?, ?, ?, 'scheduled', ?)
+    `).run(account_id, topic, content_main, comments, parseInt(comment_count || '3', 10), scheduled_at);
+
+    const post = db.prepare('SELECT * FROM posts WHERE id = ?').get(result.lastInsertRowid);
+    SchedulerService.schedulePost(post);
+    res.json({ success: true, postId: result.lastInsertRowid });
+  } catch (error) {
+    res.json({ success: false, error: error.message });
+  }
+});
+
+// History with pagination
+router.get('/history', (req, res) => {
+  const page = Math.max(1, parseInt(req.query.page || '1', 10));
+  const perPage = 20;
+  const offset = (page - 1) * perPage;
+
+  const totalPosts = db.prepare('SELECT COUNT(*) as count FROM posts').get().count;
+  const totalPages = Math.ceil(totalPosts / perPage);
+
+  const posts = db.prepare(`
+    SELECT p.*, a.username as account_username
+    FROM posts p
+    LEFT JOIN accounts a ON a.id = p.account_id
+    ORDER BY p.created_at DESC
+    LIMIT ? OFFSET ?
+  `).all(perPage, offset);
+
+  res.render('history', { page: 'history', posts, currentPage: page, totalPages, totalPosts });
+});
+
+// Delete post
+router.post('/delete/:id', (req, res) => {
+  const post = db.prepare('SELECT * FROM posts WHERE id = ?').get(req.params.id);
+  if (post && post.status === 'scheduled') {
+    SchedulerService.cancelPost(post.id);
+  }
+  db.prepare('DELETE FROM posts WHERE id = ?').run(req.params.id);
+  res.redirect('/posts/history');
+});
+
+// Retry failed post
+router.post('/retry/:id', (req, res) => {
+  const post = db.prepare('SELECT * FROM posts WHERE id = ?').get(req.params.id);
+  if (post && post.status === 'failed') {
+    db.prepare("UPDATE posts SET status = 'scheduled' WHERE id = ?").run(post.id);
+    SchedulerService.executePost(post.id);
+  }
+  res.redirect('/posts/history');
+});
+
+module.exports = router;

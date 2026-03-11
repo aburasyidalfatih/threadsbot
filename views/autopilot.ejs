@@ -1,0 +1,115 @@
+<%- include('layout', { body: `
+<div class="card" id="add-autopilot-card">
+  <div class="card-header">
+    <h3>🚀 Tambah Konfigurasi Auto Pilot</h3>
+  </div>
+  <div class="card-body">
+    <form action="/autopilot/save" method="POST" class="form-stack">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="ap-account">Akun Threads</label>
+          <select id="ap-account" name="account_id" required>
+            <option value="">— Pilih Akun —</option>
+            ${accounts.map(acc => '<option value="' + acc.id + '">@' + acc.username + (acc.access_token ? ' ✅' : ' ❌ belum connect') + '</option>').join('')}
+          </select>
+          ${accounts.length === 0 ? '<small class="form-hint">Belum ada akun. <a href="/accounts">Tambah akun</a> dulu.</small>' : ''}
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <label class="toggle-switch" style="margin-top:6px">
+            <input type="checkbox" name="is_enabled" value="1" checked>
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">Aktif</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="ap-theme">Tema / Niche Akun</label>
+          <input type="text" id="ap-theme" name="theme" placeholder="Contoh: Parenting, Tips Pernikahan, Motivasi Bisnis" required>
+        </div>
+        <div class="form-group">
+          <label for="ap-theme-desc">Deskripsi Tema (opsional)</label>
+          <input type="text" id="ap-theme-desc" name="theme_description" placeholder="Contoh: Tips merawat anak usia 0-5 tahun, gaya bahasa santai">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="ap-posting-hours">Jadwal Posting (Jam)</label>
+          <input type="text" id="ap-posting-hours" name="posting_hours" value="08,12,16,20" placeholder="00,02,04,14,22" required>
+          <small class="form-hint">Pisahkan dengan koma. Contoh: <code>00,02,04,14,22</code> = posting jam 00:00, 02:00, 04:00, 14:00, 22:00</small>
+        </div>
+        <div class="form-group">
+          <label for="ap-comment-count">Komentar Lanjutan per Post</label>
+          <select id="ap-comment-count" name="comment_count">
+            <option value="2">2 komentar</option>
+            <option value="3" selected>3 komentar</option>
+            <option value="4">4 komentar</option>
+            <option value="5">5 komentar</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="btn-right-container">
+        <button type="submit" class="btn btn-primary btn-glow" id="btn-save-autopilot">💾 Simpan Konfigurasi</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card" id="autopilot-list-card">
+  <div class="card-header">
+    <h3>🤖 Akun Auto Pilot Aktif (${configs.length})</h3>
+  </div>
+  <div class="card-body">
+    ${configs.length === 0 ? '<p class="empty-state">Belum ada konfigurasi autopilot. Tambahkan di form di atas.</p>' : ''}
+    <div class="autopilot-list">
+      ${configs.map(c => {
+        const hours = (c.posting_hours || '08,12,16,20').split(',');
+        return '<div class="autopilot-card ' + (c.is_enabled ? 'autopilot-active' : 'autopilot-inactive') + '">' +
+        '<div class="autopilot-header">' +
+          '<div class="autopilot-account">' +
+            '<span class="autopilot-username">@' + c.username + '</span>' +
+            '<span class="badge ' + (c.is_enabled ? 'badge-success' : 'badge-muted') + '">' + (c.is_enabled ? '🟢 Aktif' : '⏸️ Nonaktif') + '</span>' +
+            '<span class="badge ' + (c.is_connected ? 'badge-success' : 'badge-warning') + '">' + (c.is_connected ? 'Connected' : 'Not Connected') + '</span>' +
+          '</div>' +
+          '<div class="autopilot-theme">' +
+            '<span class="theme-badge">🎯 ' + c.theme + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="autopilot-stats-row" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">' +
+          '<div class="autopilot-stats" style="margin-bottom:0; flex:1;">' +
+            '<div class="ap-stat"><span class="ap-stat-value">' + hours.length + 'x</span><span class="ap-stat-label">Post/Hari</span></div>' +
+            '<div class="ap-stat"><span class="ap-stat-value">' + c.comment_count + '</span><span class="ap-stat-label">Komentar</span></div>' +
+            '<div class="ap-stat"><span class="ap-stat-value">' + c.posting_hours + '</span><span class="ap-stat-label">Jadwal (Jam)</span></div>' +
+            '<div class="ap-stat"><span class="ap-stat-value">' + (c.posts_today || 0) + '/' + hours.length + '</span><span class="ap-stat-label">Hari Ini</span></div>' +
+            '<div class="ap-stat"><span class="ap-stat-value">' + (c.total_posts || 0) + '</span><span class="ap-stat-label">Total Post</span></div>' +
+          '</div>' +
+          '<div class="autopilot-actions" style="margin-top:0; display:flex; gap:8px;">' +
+            '<form action="/autopilot/trigger/' + c.account_id + '" method="POST" style="display:inline"><button type="submit" class="btn btn-sm btn-primary" onclick="return confirm(\'Trigger post sekarang untuk @\' + c.username + \'?\')">⚡ Trigger</button></form>' +
+            '<form action="/autopilot/save" method="POST" style="display:inline"><input type="hidden" name="account_id" value="' + c.account_id + '"><input type="hidden" name="theme" value="' + c.theme + '"><input type="hidden" name="theme_description" value="' + (c.theme_description || '') + '"><input type="hidden" name="posting_hours" value="' + c.posting_hours + '"><input type="hidden" name="comment_count" value="' + c.comment_count + '"><input type="hidden" name="is_enabled" value="' + (c.is_enabled ? '0' : '1') + '"><button type="submit" class="btn btn-sm ' + (c.is_enabled ? 'btn-warning' : 'btn-success') + '">' + (c.is_enabled ? '⏸️ Pause' : '▶️ Resume') + '</button></form>' +
+            '<form action="/autopilot/reset-history/' + c.account_id + '" method="POST" style="display:inline"><button type="submit" class="btn btn-sm btn-outline" onclick="return confirm(\'Reset riwayat topik @\' + c.username + \'?\')">🔄 Reset</button></form>' +
+            '<form action="/autopilot/delete/' + c.account_id + '" method="POST" style="display:inline"><button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Hapus autopilot @\' + c.username + \'?\')">🗑️</button></form>' +
+          '</div>' +
+        '</div>' +
+        (c.last_posted_at ? '<div class="autopilot-last-post" style="margin-top:12px;">⏱️ Terakhir post: ' + c.last_posted_at + '</div>' : '') +
+      '</div>'}).join('')}
+    </div>
+  </div>
+</div>
+
+<div class="card" id="autopilot-info-card">
+  <div class="card-header"><h3>ℹ️ Panduan Auto Pilot</h3></div>
+  <div class="card-body">
+    <div class="info-steps">
+      <div class="info-step"><span class="step-num">1</span> Tentukan <strong>Tema/Niche</strong> spesifik dan konsisten untuk masing-masing akun</div>
+      <div class="info-step"><span class="step-num">2</span> Set <strong>Jadwal Jam Posting</strong> (pisahkan dengan koma), misal: <code>08,12,16,20</code> = 4x sehari</div>
+      <div class="info-step"><span class="step-num">3</span> Saat waktunya tiba, AI otomatis <strong>Men-generate Konten & Topik Unik Real-time</strong></div>
+      <div class="info-step"><span class="step-num">4</span> Bot Autopilot dijalankan otomatis via Scheduler yang mengecek setiap <strong>30 menit</strong></div>
+      <div class="info-step"><span class="step-num">5</span> Klik tombol <strong>⚡ Trigger Post</strong> untuk mengetes proses Auto Pilot secara manual saat itu juga</div>
+    </div>
+  </div>
+</div>
+` }) %>

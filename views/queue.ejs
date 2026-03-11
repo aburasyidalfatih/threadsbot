@@ -1,0 +1,224 @@
+<%- include('layout', { body: `
+<div class="card" id="queue-generate-card">
+  <div class="card-header">
+    <h3>📝 Generate Antrian Konten</h3>
+  </div>
+  <div class="card-body">
+    ${accounts.length === 0 ? '<p class="empty-state">Belum ada akun. <a href="/accounts">Tambah akun</a> dulu.</p>' : ''}
+    ${accounts.length > 0 ? 
+      '<div class="form-group" style="margin-bottom: 24px;">' +
+        '<label for="queue-account-select" style="margin-bottom:8px; display:block;">Pilih Akun Threads</label>' +
+        '<select id="queue-account-select" required onchange="showQueueCard(this.value)">' +
+          '<option value="">— Pilih Akun —</option>' +
+          accounts.map(acc => '<option value="' + acc.id + '">@' + acc.username + '</option>').join('') +
+        '</select>' +
+      '</div>' +
+      '<div class="queue-form-wrapper">' +
+      accounts.map(acc =>
+        '<div class="queue-account-card" id="queue-card-' + acc.id + '" style="display:none">' +
+          '<form action="/queue/generate/' + acc.id + '" method="POST" class="queue-form">' +
+            '<div class="queue-card-top">' +
+              '<div class="queue-user-info">' +
+                '<div class="queue-avatar">👤</div>' +
+                '<div>' +
+                  '<div class="autopilot-username" style="font-size:16px">@' + acc.username + '</div>' +
+                  '<div class="form-hint">Threads Account</div>' +
+                '</div>' +
+              '</div>' +
+              '<div class="queue-stats-bar">' +
+                '<div class="queue-stat-pill"><span class="queue-stat-num">' + (queueStats[acc.id]?.queued || 0) + '</span> ⏳ Antrian</div>' +
+                '<div class="queue-stat-pill used"><span class="queue-stat-num">' + (queueStats[acc.id]?.used || 0) + '</span> ✅ Terpakai</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="queue-divider"></div>' +
+            '<form action="/queue/settings/' + acc.id + '" method="POST" class="queue-settings-form form-stack">' +
+              '<div class="form-row">' +
+                '<div class="form-group queue-config-box">' +
+                  '<label class="config-label">⚡ Status Auto Post</label>' +
+                  '<label class="toggle-switch">' +
+                    '<input type="checkbox" name="is_enabled" value="1" ' + (queueConfigs[acc.id]?.is_enabled ? 'checked' : '') + '>' +
+                    '<span class="toggle-slider"></span>' +
+                    '<span class="toggle-label">' + (queueConfigs[acc.id]?.is_enabled ? 'Aktif' : 'Nonaktif') + '</span>' +
+                  '</label>' +
+                  '<div class="form-hint" style="margin-top:8px">Aktifkan untuk auto post.</div>' +
+                '</div>' +
+                '<div class="form-group queue-config-box">' +
+                  '<label class="config-label">⏰ Jam Posting</label>' +
+                  '<input type="text" name="schedule_hours" value="' + (queueConfigs[acc.id]?.schedule_hours || '08,12,16,20') + '" placeholder="08,12,18" required>' +
+                  '<div class="form-hint" style="margin-top:8px">Format 24 jam dipisahkan koma.</div>' +
+                '</div>' +
+              '</div>' +
+              '<div class="btn-right-container" style="margin-top:8px">' +
+                '<button type="submit" class="btn btn-primary">💾 Simpan Pengaturan</button>' +
+              '</div>' +
+            '</form>' +
+            '<div class="queue-divider"></div>' +
+            '<form action="/queue/generate/' + acc.id + '" method="POST" class="queue-form form-stack">' +
+            '<div class="form-group">' +
+              '<label>🎯 Tema / Niche</label>' +
+              '<input type="text" name="theme" placeholder="Contoh: Parenting, Tips Bisnis, Motivasi, Kesehatan" required>' +
+            '</div>' +
+            '<div class="form-group">' +
+              '<label>📋 Deskripsi Tema (opsional)</label>' +
+              '<input type="text" name="theme_description" placeholder="Detail gaya bahasa, target audience, tone, dll">' +
+            '</div>' +
+            '<div class="form-row">' +
+              '<div class="form-group">' +
+                '<label>💬 Komentar</label>' +
+                '<select name="comment_count"><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select>' +
+              '</div>' +
+              '<div class="form-group">' +
+                '<label>📦 Jumlah</label>' +
+                '<select name="count"><option value="3">3 konten</option><option value="5" selected>5 konten</option><option value="10">10 konten</option><option value="15">15 konten</option><option value="20">20 konten</option></select>' +
+              '</div>' +
+            '</div>' +
+            '<div class="btn-right-container">' +
+              '<button type="submit" class="btn btn-primary btn-glow">🤖 Generate Queue</button>' +
+            '</div>' +
+          '</form>' +
+          ((queueStats[acc.id]?.used || 0) > 0 ? '<form action="/queue/cleanup/' + acc.id + '" method="POST" style="margin-top:12px"><button type="submit" class="btn btn-sm btn-outline" style="width:100%">🧹 Cleanup Konten Terpakai</button></form>' : '') +
+        '</div>'
+      ).join('') +
+    '</div>' : ''}
+  </div>
+</div>
+
+<div class="card" id="queue-items-card">
+  <div class="card-header">
+    <h3>📋 Antrian Konten (<span id="queue-header-count">${queueItems.length}</span> menunggu)</h3>
+  </div>
+  <div class="card-body">
+    <p class="empty-state" id="queue-empty-state" style="${queueItems.length === 0 ? 'display:block' : 'display:none'}">Antrian konten kosong untuk akun ini.</p>
+    <div class="queue-items-list">
+      ${queueItems.map((item, index) =>
+        '<div class="queue-item" data-account-id="' + item.account_id + '">' +
+          '<div class="queue-item-header">' +
+            '<div class="queue-item-meta">' +
+              '<span class="queue-num">#' + (index + 1) + '</span>' +
+              '<span class="autopilot-username">@' + item.username + '</span>' +
+              '<span class="badge badge-scheduled">queued</span>' +
+            '</div>' +
+            '<div class="queue-item-actions">' +
+              '<button class="btn btn-sm btn-ghost" onclick="editQueueItem(' + item.id + ')">✏️ Edit</button>' +
+              '<form action="/queue/delete/' + item.id + '" method="POST" style="display:inline"><button type="submit" class="btn btn-sm btn-danger">🗑️</button></form>' +
+            '</div>' +
+          '</div>' +
+          '<div class="queue-item-topic"><strong>' + item.topic + '</strong></div>' +
+          '<div class="queue-item-preview">' + (item.content_main || '').substring(0, 200) + '...</div>' +
+          '<div class="queue-item-footer">' +
+            '<span class="form-hint">💬 ' + item.comment_count + ' komentar</span>' +
+            '<span class="form-hint">🕐 ' + item.created_at + '</span>' +
+          '</div>' +
+        '</div>'
+      ).join('')}
+    </div>
+  </div>
+</div>
+
+<div class="card" id="queue-info-card">
+  <div class="card-header"><h3>ℹ️ Panduan Content Queue</h3></div>
+  <div class="card-body">
+    <div class="info-steps">
+      <div class="info-step"><span class="step-num">1</span> Generate antrian post massal dari sistem AI dengan memasukkan <strong>Tema/Topik</strong></div>
+      <div class="info-step"><span class="step-num">2</span> Anda bebas untuk me-<strong>Review, Edit, Hapus, atau Posting Manual</strong> konten dari antrian</div>
+      <div class="info-step"><span class="step-num">3</span> <strong>Jadwal Mandiri:</strong> Fitur Queue memiliki <strong>Jadwal Independen</strong> yang bisa diatur pada Header Akun</div>
+      <div class="info-step"><span class="step-num">4</span> Aktifkan tombol (ON), Queue akan diposting otomatis sesuai jadwal jam (Tanpa perlu AutoPilot)</div>
+      <div class="info-step"><span class="step-num">5</span> Fitur Content Queue ini <strong>berdiri sendiri 100%</strong> dan terpisah dari menu AutoPilot</div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="edit-modal" style="display:none" onclick="if(event.target===this)this.style.display='none'">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>✏️ Edit Konten Antrian</h3>
+      <button class="btn btn-ghost" onclick="document.getElementById('edit-modal').style.display='none'">✕</button>
+    </div>
+    <div class="modal-body">
+      <form action="" method="POST" id="edit-form" class="form-stack">
+        <div class="form-group">
+          <label>Topik</label>
+          <div id="edit-topic" style="font-weight:600;padding:8px 0"></div>
+        </div>
+        <div class="form-group">
+          <label>Postingan Utama</label>
+          <textarea name="content_main" id="edit-main" rows="4" style="width:100%"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Komentar Lanjutan (JSON array)</label>
+          <textarea name="content_comments" id="edit-comments" rows="6" style="width:100%"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">💾 Simpan Perubahan</button>
+      </form>
+    </div>
+  </div>
+</div>
+` }) %>
+
+<script>
+async function editQueueItem(id) {
+  try {
+    const res = await fetch('/queue/api/' + id);
+    const data = await res.json();
+    if (!data.success) return alert('Item not found');
+
+    document.getElementById('edit-topic').textContent = data.item.topic;
+    document.getElementById('edit-main').value = data.item.content_main;
+    document.getElementById('edit-comments').value = JSON.stringify(data.item.comments, null, 2);
+    document.getElementById('edit-form').action = '/queue/edit/' + id;
+    document.getElementById('edit-modal').style.display = 'flex';
+  } catch (e) {
+    alert('Error: ' + e.message);
+  }
+}
+</script>
+
+<script>
+function showQueueCard(accountId) {
+  // Hide all cards
+  document.querySelectorAll('.queue-account-card').forEach(card => {
+    card.style.display = 'none';
+  });
+  
+  // Show selected card
+  if (accountId) {
+    const activeCard = document.getElementById('queue-card-' + accountId);
+    if (activeCard) {
+      activeCard.style.display = 'block';
+    }
+  }
+
+  // Filter Queue Items list
+  let visibleCount = 0;
+  document.querySelectorAll('.queue-item').forEach(item => {
+    // If accountId matches, clear the display style to restore layout rules, otherwise hide
+    if (item.getAttribute('data-account-id') === accountId) {
+      item.style.display = '';
+      visibleCount++;
+    } else {
+      item.style.display = 'none';
+    }
+  });
+
+  // Update empty state visibility
+  const emptyState = document.getElementById('queue-empty-state');
+  if (emptyState) {
+    emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+  }
+
+  // Update counter in header
+  const headerCount = document.getElementById('queue-header-count');
+  if (headerCount) {
+    headerCount.textContent = visibleCount;
+  }
+}
+
+// Auto-select first account on load
+document.addEventListener('DOMContentLoaded', () => {
+  const select = document.getElementById('queue-account-select');
+  if (select && select.options.length > 1) {
+    select.selectedIndex = 1;
+    showQueueCard(select.value);
+  }
+});
+</script>

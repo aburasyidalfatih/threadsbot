@@ -1,0 +1,91 @@
+<%- include('layout', { body: `
+<div class="card" id="gemini-settings-card">
+  <div class="card-header">
+    <h3>🤖 Pengaturan AI (Gemini)</h3>
+  </div>
+  <div class="card-body">
+    <form action="/settings/save" method="POST" class="form-stack">
+      <div class="form-group">
+        <label for="gemini_api_key">Gemini API Key</label>
+        <div class="input-with-action">
+          <input type="password" id="gemini_api_key" name="gemini_api_key" value="${settings.gemini_api_key || ''}" placeholder="AIzaSy...">
+          <button type="button" class="btn btn-sm btn-ghost" onclick="togglePasswordVisibility('gemini_api_key')">👁️</button>
+        </div>
+        <small class="form-hint">Dapatkan di <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com</a></small>
+      </div>
+      <div class="form-group">
+        <label for="gemini_model">Model Gemini</label>
+        <select id="gemini_model" name="gemini_model">
+          <option value="gemini-2.5-flash" ${settings.gemini_model === 'gemini-2.5-flash' ? 'selected' : ''}>Gemini 2.5 Flash (Default/Fast)</option>
+          <option value="gemini-2.5-pro" ${settings.gemini_model === 'gemini-2.5-pro' ? 'selected' : ''}>Gemini 2.5 Pro (Best Quality)</option>
+          <option value="gemini-2.0-flash" ${settings.gemini_model === 'gemini-2.0-flash' ? 'selected' : ''}>Gemini 2.0 Flash (Legacy Fast)</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="default_comment_count">Default Jumlah Komentar</label>
+          <input type="number" id="default_comment_count" name="default_comment_count" value="${settings.default_comment_count || 3}" min="1" max="10">
+        </div>
+        <div class="form-group">
+          <label for="post_delay_seconds">Delay Antar Post (detik)</label>
+          <input type="number" id="post_delay_seconds" name="post_delay_seconds" value="${settings.post_delay_seconds || 30}" min="10" max="300">
+          <small class="form-hint">Minimal 10 detik untuk menghindari rate limit</small>
+        </div>
+      </div>
+      <div class="btn-right-container">
+        <button type="submit" class="btn btn-primary" id="btn-save-settings">💾 Simpan Pengaturan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card" id="auto-reply-settings-card">
+  <div class="card-header">
+    <h3>💬 Pengaturan Auto Reply</h3>
+  </div>
+  <div class="card-body">
+    ${autoReplyConfigs.length === 0 ? '<p class="empty-state">Belum ada akun terdaftar. <a href="/accounts">Tambah akun</a> terlebih dahulu.</p>' : ''}
+    ${autoReplyConfigs.map(config => '<form action="/settings/auto-reply/' + config.account_id + '" method="POST" class="auto-reply-form">' +
+      '<div class="auto-reply-header">' +
+        '<h4>@' + config.username + '</h4>' +
+        '<label class="toggle-switch">' +
+          '<input type="checkbox" name="is_enabled" value="1" ' + (config.is_enabled ? 'checked' : '') + '>' +
+          '<span class="toggle-slider"></span>' +
+          '<span class="toggle-label">' + (config.is_enabled ? 'Aktif' : 'Nonaktif') + '</span>' +
+        '</label>' +
+      '</div>' +
+      '<div class="form-inline-row">' +
+        '<div class="form-group" style="flex: 2;"><label>Gaya Reply</label><select name="reply_style">' +
+          '<option value="friendly" ' + (config.reply_style === 'friendly' ? 'selected' : '') + '>😊 Friendly</option>' +
+          '<option value="witty" ' + (config.reply_style === 'witty' ? 'selected' : '') + '>😄 Witty</option>' +
+          '<option value="professional" ' + (config.reply_style === 'professional' ? 'selected' : '') + '>💼 Professional</option>' +
+          '<option value="casual" ' + (config.reply_style === 'casual' ? 'selected' : '') + '>😎 Casual</option>' +
+        '</select></div>' +
+        '<div class="form-group" style="flex: 1;"><label>Max Reply/Check</label><input type="number" name="max_replies_per_check" value="' + (config.max_replies_per_check || 5) + '" min="1" max="20"></div>' +
+        '<div><button type="submit" class="btn btn-primary" style="height: 48px; padding: 0 24px;">💾 Simpan</button></div>' +
+      '</div>' +
+      (config.last_checked_at ? '<small class="form-hint">Last check: ' + config.last_checked_at + '</small>' : '') +
+    '</form>').join('<hr>')}
+  </div>
+</div>
+` }) %>
+
+<div class="card" id="settings-info-card" style="margin-top: 24px;">
+  <div class="card-header"><h3>ℹ️ Panduan Pengaturan</h3></div>
+  <div class="card-body">
+    <div class="info-steps">
+      <div class="info-step"><span class="step-num">1</span> <strong>Model Gemini:</strong> Pilih "Flash" untuk hasil cepat, atau "Pro" untuk logika yang kompleks</div>
+      <div class="info-step"><span class="step-num">2</span> <strong>Delay Post:</strong> Berikan jeda waktu minimum agar tidak terdeteksi spam/rate limit oleh Threads</div>
+      <div class="info-step"><span class="step-num">3</span> <strong>Auto Reply:</strong> Bot mengecek interaksi/balasan baru pada antrian komentar Anda setiap 5 menit</div>
+      <div class="info-step"><span class="step-num">4</span> <strong>Gaya Reply:</strong> AI akan merespons komentar masuk dan membalasnya dengan gaya tersebut</div>
+      <div class="info-step"><span class="step-num">5</span> <strong>Max Reply:</strong> Batas maksimal komentar yang direspon dalam sekali waktu pengecekan</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function togglePasswordVisibility(inputId) {
+  const input = document.getElementById(inputId);
+  input.type = input.type === 'password' ? 'text' : 'password';
+}
+</script>

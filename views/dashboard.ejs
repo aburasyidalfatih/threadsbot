@@ -1,0 +1,135 @@
+<%- include('layout', { body: `
+<div class="stats-grid">
+  <div class="stat-card" id="stat-accounts">
+    <div class="stat-icon">👥</div>
+    <div class="stat-info">
+      <div class="stat-value">${stats.activeAccounts}/${stats.totalAccounts}</div>
+      <div class="stat-label">Akun Aktif</div>
+    </div>
+  </div>
+  <div class="stat-card stat-success" id="stat-posts">
+    <div class="stat-icon">📝</div>
+    <div class="stat-info">
+      <div class="stat-value">${stats.donePosts}</div>
+      <div class="stat-label">Post Berhasil</div>
+    </div>
+  </div>
+  <div class="stat-card stat-warning" id="stat-pending">
+    <div class="stat-icon">⏳</div>
+    <div class="stat-info">
+      <div class="stat-value">${stats.pendingPosts}</div>
+      <div class="stat-label">Menunggu</div>
+    </div>
+  </div>
+  <div class="stat-card stat-danger" id="stat-failed">
+    <div class="stat-icon">❌</div>
+    <div class="stat-info">
+      <div class="stat-value">${stats.failedPosts}</div>
+      <div class="stat-label">Gagal</div>
+    </div>
+  </div>
+  <div class="stat-card stat-info" id="stat-replies">
+    <div class="stat-icon">💬</div>
+    <div class="stat-info">
+      <div class="stat-value">${stats.totalReplies}</div>
+      <div class="stat-label">Auto Reply</div>
+    </div>
+  </div>
+  <div class="stat-card stat-affiliate" id="stat-products">
+    <div class="stat-icon">🛍️</div>
+    <div class="stat-info">
+      <div class="stat-value">${stats.totalProducts}</div>
+      <div class="stat-label">Produk Affiliate</div>
+    </div>
+  </div>
+  <div class="stat-card stat-success" id="stat-autopilot">
+    <div class="stat-icon">🚀</div>
+    <div class="stat-info">
+      <div class="stat-value">${stats.activeAutopilot}</div>
+      <div class="stat-label">AutoPilot Aktif</div>
+    </div>
+  </div>
+  <div class="stat-card stat-info" id="stat-autopilot-today">
+    <div class="stat-icon">🤖</div>
+    <div class="stat-info">
+      <div class="stat-value">${stats.autopilotPostsToday}</div>
+      <div class="stat-label">AutoPilot Hari Ini</div>
+    </div>
+  </div>
+</div>
+
+${expiringTokens.length > 0 ? '<div class="alert alert-error" style="margin-bottom:20px">⚠️ <strong>Token expiring soon!</strong> ' + expiringTokens.map(t => '@' + t.username + ' (exp: ' + t.token_expires_at + ')').join(', ') + '. <a href="/accounts">Refresh token</a>.</div>' : ''}
+
+<div class="dashboard-grid">
+  <div class="card" id="recent-posts-card">
+    <div class="card-header">
+      <h3>📝 Postingan Terbaru</h3>
+      <a href="/posts/create" class="btn btn-sm btn-primary">+ Buat Post</a>
+    </div>
+    <div class="card-body">
+      ${recentPosts.length === 0 ? '<p class="empty-state">Belum ada postingan. <a href="/posts/create">Buat sekarang!</a></p>' : ''}
+      <div class="activity-list">
+        ${recentPosts.map(post => `
+          <div class="activity-item">
+            <div class="activity-badge badge-${post.status}">${post.status}</div>
+            <div class="activity-content">
+              <div class="activity-title">${post.topic || 'Tanpa topik'}</div>
+              <div class="activity-meta">
+                <span class="activity-account">@${post.account_username || 'unknown'}</span>
+                <span class="activity-type badge-type-${post.type}">${post.type}</span>
+                <span class="activity-time">${post.created_at}</span>
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="recent-replies-card">
+    <div class="card-header">
+      <h3>💬 Auto Reply Terbaru</h3>
+    </div>
+    <div class="card-body">
+      ${recentReplies.length === 0 ? '<p class="empty-state">Belum ada auto-reply.</p>' : ''}
+      <div class="activity-list">
+        ${recentReplies.map(reply => `
+          <div class="activity-item">
+            <div class="activity-badge badge-done">replied</div>
+            <div class="activity-content">
+              <div class="activity-title">"${(reply.reply_content || '').substring(0, 80)}..."</div>
+              <div class="activity-meta">
+                <span>→ @${reply.original_commenter || 'unknown'}</span>
+                <span class="activity-time">${reply.replied_at}</span>
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="quick-actions">
+  <a href="/posts/create" class="action-card" id="action-create-post">
+    <span class="action-icon">✍️</span>
+    <span class="action-label">Buat Postingan Baru</span>
+  </a>
+  <a href="/affiliate" class="action-card" id="action-affiliate">
+    <span class="action-icon">🛍️</span>
+    <span class="action-label">Promosi Affiliate</span>
+  </a>
+  <a href="/accounts" class="action-card" id="action-accounts">
+    <span class="action-icon">👥</span>
+    <span class="action-label">Kelola Akun</span>
+  </a>
+  <a href="/autopilot" class="action-card" id="action-autopilot">
+    <span class="action-icon">🚀</span>
+    <span class="action-label">Auto Pilot</span>
+  </a>
+  <a href="/settings" class="action-card" id="action-settings">
+    <span class="action-icon">⚙️</span>
+    <span class="action-label">Pengaturan</span>
+  </a>
+</div>
+` }) %>

@@ -1,0 +1,75 @@
+require('dotenv').config();
+const express = require('express');
+const session = require('express-session');
+const path = require('path');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Initialize database
+const db = require('./config/database');
+
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'threadsbot-secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 24 * 60 * 60 * 1000 }
+}));
+
+// View engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// Flash messages middleware
+app.use((req, res, next) => {
+  res.locals.query = req.query;
+  next();
+});
+
+// Routes
+app.use('/', require('./routes/dashboard'));
+app.use('/accounts', require('./routes/accounts'));
+app.use('/posts', require('./routes/posts'));
+app.use('/affiliate', require('./routes/affiliate'));
+app.use('/autopilot', require('./routes/autopilot'));
+app.use('/queue', require('./routes/queue'));
+app.use('/settings', require('./routes/settings'));
+app.use('/', require('./routes/api'));
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).render('layout', {
+    page: '404',
+    body: '<div class="empty-state" style="padding:60px 20px"><h2 style="font-size:48px;margin-bottom:12px">404</h2><p>Halaman tidak ditemukan. <a href="/">Kembali ke Dashboard</a></p></div>'
+  });
+});
+
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error('[Error]', err.stack);
+  res.status(500).redirect('/?error=' + encodeURIComponent('Terjadi kesalahan server'));
+});
+
+// Start scheduler
+const SchedulerService = require('./services/scheduler');
+
+const server = app.listen(PORT, () => {
+  console.log(`🤖 ThreadsBot running at http://localhost:${PORT}`);
+  SchedulerService.init();
+});
+
+// Graceful shutdown
+const shutdown = () => {
+  console.log('\n🛑 Shutting down gracefully...');
+  server.close(() => {
+    db.close();
+    console.log('✅ Server closed.');
+    process.exit(0);
+  });
+};
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);

@@ -1,0 +1,62 @@
+<%- include('layout', { body: `
+<div class="card" id="add-account-card">
+  <div class="card-header">
+    <h3>➕ Tambah Akun Threads</h3>
+  </div>
+  <div class="card-body">
+    <form action="/accounts/add" method="POST" class="form-grid">
+      <div class="form-group">
+        <label for="username">Username Threads</label>
+        <input type="text" id="username" name="username" placeholder="@username" required>
+      </div>
+      <div class="form-group">
+        <label for="app_id">Threads App ID</label>
+        <input type="text" id="app_id" name="app_id" placeholder="Meta App ID" required>
+      </div>
+      <div class="form-group">
+        <label for="app_secret">Threads App Secret</label>
+        <input type="password" id="app_secret" name="app_secret" placeholder="Meta App Secret" required>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" id="btn-add-account">Tambah Akun</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card" id="accounts-list-card">
+  <div class="card-header">
+    <h3>👥 Daftar Akun (${accounts.length})</h3>
+  </div>
+  <div class="card-body">
+    ${accounts.length === 0 ? '<p class="empty-state">Belum ada akun. Tambahkan akun di atas.</p>' : ''}
+    <div class="table-wrapper">
+      ${accounts.length > 0 ? '<table class="data-table"><thead><tr><th>Username</th><th>Status</th><th>Token</th><th>Expires</th><th>Aksi</th></tr></thead><tbody>' + accounts.map(acc => '<tr>' +
+        '<td><strong>@' + acc.username + '</strong></td>' +
+        '<td><span class="badge ' + (acc.is_active ? 'badge-success' : 'badge-muted') + '">' + (acc.is_active ? 'Active' : 'Inactive') + '</span></td>' +
+        '<td><span class="badge ' + (acc.access_token ? 'badge-success' : 'badge-warning') + '">' + (acc.access_token ? 'Connected' : 'Not Connected') + '</span></td>' +
+        '<td>' + (acc.token_expires_at || '-') + '</td>' +
+        '<td class="action-buttons">' +
+          (!acc.access_token ? '<a href="/accounts/connect/' + acc.id + '" class="btn btn-sm btn-primary">Connect</a>' : '<form action="/accounts/disconnect/' + acc.id + '" method="POST" style="display:inline"><button type="submit" class="btn btn-sm btn-outline">Disconnect</button></form>') +
+          '<form action="/accounts/toggle/' + acc.id + '" method="POST" style="display:inline"><button type="submit" class="btn btn-sm ' + (acc.is_active ? 'btn-warning' : 'btn-success') + '">' + (acc.is_active ? 'Disable' : 'Enable') + '</button></form>' +
+          '<form action="/accounts/delete/' + acc.id + '" method="POST" style="display:inline" onsubmit="return confirm(\'Hapus akun ini?\')"><button type="submit" class="btn btn-sm btn-danger">Hapus</button></form>' +
+        '</td>' +
+      '</tr>').join('') + '</tbody></table>' : ''}
+    </div>
+  </div>
+</div>
+
+<div class="card" id="oauth-info-card">
+  <div class="card-header"><h3>ℹ️ Panduan Setup</h3></div>
+  <div class="card-body">
+    <div class="info-steps">
+      <div class="info-step"><span class="step-num">1</span> Buat Meta App di <a href="https://developers.facebook.com" target="_blank">developers.facebook.com</a></div>
+      <div class="info-step"><span class="step-num">2</span> Pilih use case <strong>"Threads"</strong></div>
+      <div class="info-step"><span class="step-num">3</span> Catat <strong>App ID</strong> dan <strong>App Secret</strong></div>
+      <div class="info-step"><span class="step-num">4</span> Set OAuth Redirect URI: <code id="redirect-uri">${accounts.length > 0 ? accounts[0].redirect_uri : (typeof process !== 'undefined' ? '' : 'http://localhost:3000') + '/callback/threads'}</code></div>
+      <div class="info-step"><span class="step-num">5</span> Tambah akun di form di atas, lalu klik <strong>Connect</strong></div>
+      <div class="info-step"><span class="step-num">6</span> Pastikan status akun <strong>Active</strong> (Enable) agar bisa digunakan di fitur lain (Queue, Affiliate, AutoPilot)</div>
+    </div>
+  </div>
+</div>
+` }) %>
