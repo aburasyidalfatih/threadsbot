@@ -186,6 +186,7 @@ a:hover { color: var(--accent-primary); }
 .topbar {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 16px;
   padding: 20px 0;
   position: sticky;
@@ -211,6 +212,11 @@ a:hover { color: var(--accent-primary); }
   font-size: 24px;
   font-weight: 700;
   background: linear-gradient(135deg, var(--text-primary), var(--accent-primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  flex-shrink: 0;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1504,3 +1510,82 @@ a:hover { color: var(--accent-primary); }
   border-top: 1px solid var(--border-primary);
 }
 
+
+
+/* ============================
+   User Header & Logout
+   ============================ */
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.user-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.user-greeting {
+  font-size: 13px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.user-greeting strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: linear-gradient(135deg, var(--accent-danger), #ff6b6b);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(255, 77, 106, 0.2);
+}
+
+.logout-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 77, 106, 0.3);
+}
+
+.logout-icon {
+  font-size: 14px;
+}
+
+.logout-text {
+  display: inline;
+}
+
+@media (max-width: 1024px) {
+  .user-greeting {
+    display: none;
+  }
+  
+  .logout-text {
+    display: none;
+  }
+  
+  .logout-btn {
+    padding: 8px 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .topbar-right {
+    gap: 8px;
+  }
+}

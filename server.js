@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3000;
 
 // Initialize database
 const db = require('./config/database');
+const { checkAuth } = require('./middleware/auth');
 
 // Middleware
 app.use(express.json());
@@ -27,10 +28,27 @@ app.set('views', path.join(__dirname, 'views'));
 // Flash messages middleware
 app.use((req, res, next) => {
   res.locals.query = req.query;
+  res.locals.user = req.session.userId ? {
+    id: req.session.userId,
+    name: req.session.userName,
+    email: req.session.userEmail
+  } : null;
+  next();
+});
+
+// Auth check middleware
+app.use((req, res, next) => {
+  if (req.path === '/login' || req.path === '/register' || req.path === '/logout' || req.path.startsWith('/login') || req.path.startsWith('/register')) {
+    return next();
+  }
+  if (!req.session.userId) {
+    return res.redirect('/login');
+  }
   next();
 });
 
 // Routes
+app.use('/', require('./routes/auth'));
 app.use('/', require('./routes/dashboard'));
 app.use('/accounts', require('./routes/accounts'));
 app.use('/posts', require('./routes/posts'));

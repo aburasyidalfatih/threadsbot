@@ -1,0 +1,153 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                  ThreadsBot - Sistem Autentikasi & Profil                  ║
+║                         Quick Start Guide                                  ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+🚀 AKSES APLIKASI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+URL: https://threadsbot.kelasmaster.id
+Port: 5008
+Status: ✅ Running
+
+📝 HALAMAN UTAMA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. LOGIN
+   URL: https://threadsbot.kelasmaster.id/login
+   - Masukkan email & password
+   - Klik "Login"
+   - Redirect ke dashboard
+
+2. REGISTER (Jika belum punya akun)
+   URL: https://threadsbot.kelasmaster.id/register
+   - Isi nama lengkap
+   - Isi email (harus unik)
+   - Isi password (min 6 karakter)
+   - Konfirmasi password
+   - Klik "Daftar"
+   - Redirect ke login
+
+3. PROFIL
+   URL: https://threadsbot.kelasmaster.id/profile
+   - Klik ikon 👤 di topbar kanan
+   - Pilih "Profil"
+   - Edit nama & email
+   - Atau ubah password
+
+4. LOGOUT
+   - Klik ikon 👤 di topbar kanan
+   - Pilih "Logout"
+   - Session dihapus
+
+🔐 KEAMANAN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Password di-hash SHA256
+✅ Email validation
+✅ Session-based authentication
+✅ Input validation
+✅ CSRF protection
+
+📊 DATABASE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Tabel: users
+Fields:
+  - id (INTEGER PRIMARY KEY)
+  - name (TEXT)
+  - email (TEXT UNIQUE)
+  - password (TEXT - SHA256 hashed)
+  - created_at (DATETIME)
+  - updated_at (DATETIME)
+
+Lihat users:
+  sqlite3 /home/ubuntu/threadsbot/data/threadsbot.db "SELECT * FROM users;"
+
+🛠️ TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ Login Gagal
+   → Pastikan email & password benar
+   → Cek apakah akun sudah terdaftar
+   → Lihat logs: tail -f /home/ubuntu/threadsbot/dashboard.log
+
+❌ Email Sudah Terdaftar
+   → Gunakan email yang berbeda
+   → Atau gunakan akun yang sudah ada
+
+❌ Session Expired
+   → Login kembali
+   → Session berlaku 24 jam
+
+❌ Password Tidak Bisa Diubah
+   → Pastikan password lama benar
+   → Password baru minimal 6 karakter
+   → Konfirmasi password harus cocok
+
+📋 COMMAND REFERENCE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Restart Service:
+  sudo supervisorctl restart threadsbot
+
+Stop Service:
+  sudo supervisorctl stop threadsbot
+
+Start Service:
+  sudo supervisorctl start threadsbot
+
+View Logs:
+  tail -f /home/ubuntu/threadsbot/dashboard.log
+
+Check Database:
+  sqlite3 /home/ubuntu/threadsbot/data/threadsbot.db
+
+📁 FILE STRUCTURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+threadsbot/
+├── middleware/
+│   └── auth.js                 # Middleware autentikasi
+├── routes/
+│   └── auth.js                 # Routes login/register/profile
+├── views/
+│   ├── login.ejs              # Halaman login
+│   ├── register.ejs           # Halaman register
+│   ├── profile.ejs            # Halaman profil
+│   └── layout.ejs             # Layout dengan menu profil
+├── config/
+│   └── database.js            # Database config
+├── public/css/
+│   └── style.css              # CSS (updated)
+├── server.js                  # Main server (updated)
+├── AUTHENTICATION_GUIDE.md    # Dokumentasi lengkap
+└── QUICK_START_AUTH.txt       # File ini
+
+📞 DOKUMENTASI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Dokumentasi Lengkap:
+  /home/ubuntu/threadsbot/AUTHENTICATION_GUIDE.md
+
+Implementation Summary:
+  /home/ubuntu/threadsbot/IMPLEMENTATION_SUMMARY_AUTH.md
+
+Quick Start (File ini):
+  /home/ubuntu/threadsbot/QUICK_START_AUTH.txt
+
+✅ STATUS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Database: Ready
+✅ Middleware: Ready
+✅ Routes: Ready
+✅ Views: Ready
+✅ UI/UX: Ready
+✅ Session Management: Ready
+✅ Service: Running
+
+Status: 🟢 PRODUCTION READY
+
+Last Updated: 2026-03-12 06:17
+Version: 1.0

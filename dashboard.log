@@ -2061,3 +2061,371 @@ memory, and will not scale past a single process.
 [AutoReply] Error processing post 18083942995994534: Get replies failed: Unsupported get request. Object with ID '18083942995994534' does not exist, cannot be loaded due to missing permissions, or does not support this operation
 [AutoReply] Checking for new comments...
 [AutoReply] Error processing post 18083942995994534: Get replies failed: Unsupported get request. Object with ID '18083942995994534' does not exist, cannot be loaded due to missing permissions, or does not support this operation
+[QueueWorker] Checking content queue schedules...
+[AutoReply] Checking for new comments...
+[AutoReply] Error processing post 18083942995994534: Get replies failed: Unsupported get request. Object with ID '18083942995994534' does not exist, cannot be loaded due to missing permissions, or does not support this operation
+[AutoReply] Checking for new comments...
+[AutoReply] Error processing post 18083942995994534: Get replies failed: Unsupported get request. Object with ID '18083942995994534' does not exist, cannot be loaded due to missing permissions, or does not support this operation
+[Gemini] Raw response: ```json
+{
+  "main_post": "Saya habiskan 120+ jam testing puluhan AI tools di 2026.\n\nHasilnya? Saya berhasil potong 20 jam kerja/minggu dan 90% tugas admin saya sekarang jalan sendiri.\n\nBukan soal tool-nya, tapi soal sistem yang bener. Ini framework yang saya pakai...",
+  "comments": [
+    "Kenap
+[Gemini] Cleaned response: {
+  "main_post": "Saya habiskan 120+ jam testing puluhan AI tools di 2026.\n\nHasilnya? Saya berhasil potong 20 jam kerja/minggu dan 90% tugas admin saya sekarang jalan sendiri.\n\nBukan soal tool-nya, tapi soal sistem yang bener. Ini framework yang saya pakai...",
+  "comments": [
+    "Kenapa ini pe
+[QueueWorker] Checking content queue schedules...
+[AutoReply] Checking for new comments...
+[AutoReply] Error processing post 18083942995994534: Get replies failed: Unsupported get request. Object with ID '18083942995994534' does not exist, cannot be loaded due to missing permissions, or does not support this operation
+[AutoReply] Checking for new comments...
+[AutoReply] Error processing post 18083942995994534: Get replies failed: Unsupported get request. Object with ID '18083942995994534' does not exist, cannot be loaded due to missing permissions, or does not support this operation
+[QueueWorker] Checking content queue schedules...
+[AutoReply] Checking for new comments...
+[AutoPilot] Running autopilot check...
+[AutoReply] Error processing post 18083942995994534: Get replies failed: Unsupported get request. Object with ID '18083942995994534' does not exist, cannot be loaded due to missing permissions, or does not support this operation
+[AutoPilot] Generating real-time for @bekalpernikahan.id | Topic: Merasa kehilangan jati diri setelah menikah, dan ternyata solusinya bukan 'kompromi' tapi 'egoisme sehat'.
+[AutoPilot] Generating real-time for @curhat_parenting | Topic: Jebakan 'parenting efisien' yang tanpa sadar merampas kesempatan anak untuk belajar dari kesulitan.
+[Gemini] Raw response: ```json
+{
+  "main_post": "Dulu aku kira kunci nikah bahagia itu ‘kompromi’. Ternyata itu jebakan batman yang bikin aku hampir kehilangan diri sendiri.\n\nSelama 2 tahun pertama pernikahan, aku sibuk jadi 'kita' sampai lupa gimana rasanya jadi 'aku'. \n\nDan ternyata, solusinya justru sesuatu yang se
+[Gemini] Cleaned response: {
+  "main_post": "Dulu aku kira kunci nikah bahagia itu ‘kompromi’. Ternyata itu jebakan batman yang bikin aku hampir kehilangan diri sendiri.\n\nSelama 2 tahun pertama pernikahan, aku sibuk jadi 'kita' sampai lupa gimana rasanya jadi 'aku'. \n\nDan ternyata, solusinya justru sesuatu yang selama ini
+[AutoPilot] Post created for @bekalpernikahan.id: "Merasa kehilangan jati diri setelah menikah, dan ternyata solusinya bukan 'kompromi' tapi 'egoisme sehat'." (0/5 today)
+[Scheduler] Executing post 23...
+[Gemini] Raw response: ```json
+{
+  "main_post": "Tadi pagi anakku, 6 tahun, numpahin sereal. Refleks pertamaku: langsung ambil lap & siapin baju ganti biar cepet beres.\n\nSatu detik sebelum bergerak, aku sadar. Aku hampir aja merampas kesempatan dia belajar dari 'bencana' kecilnya sendiri.\n\nJebakan 'parenting efisien' 
+[Gemini] Cleaned response: {
+  "main_post": "Tadi pagi anakku, 6 tahun, numpahin sereal. Refleks pertamaku: langsung ambil lap & siapin baju ganti biar cepet beres.\n\nSatu detik sebelum bergerak, aku sadar. Aku hampir aja merampas kesempatan dia belajar dari 'bencana' kecilnya sendiri.\n\nJebakan 'parenting efisien' ini lebi
+[AutoPilot] Post created for @curhat_parenting: "Jebakan 'parenting efisien' yang tanpa sadar merampas kesempatan anak untuk belajar dari kesulitan." (0/5 today)
+[Scheduler] Executing post 24...
+[Scheduler] Main post published: 17868434448585144
+[Scheduler] Main post published: 18096257698810988
+[Scheduler] Comment 1/5 posted: 18112218028671605 (reply to: main post)
+[Scheduler] Comment 1/5 posted: 18000043979732261 (reply to: main post)
+[Scheduler] Comment 2/5 posted: 18059200250391708 (reply to: comment 1)
+[Scheduler] Comment 2/5 posted: 18098015167958495 (reply to: comment 1)
+[Scheduler] Comment 3/5 posted: 18564487915002827 (reply to: comment 2)
+[Scheduler] Comment 3/5 posted: 18088223960165649 (reply to: comment 2)
+[Scheduler] Comment 4/5 posted: 18332482711172763 (reply to: comment 3)
+[Scheduler] Comment 4/5 posted: 17872783617556050 (reply to: comment 3)
+[Scheduler] Comment 5/5 posted: 18103296527500206 (reply to: comment 4)
+[Scheduler] Post 23 completed successfully
+[Scheduler] Comment 5/5 posted: 18129294547541400 (reply to: comment 4)
+[Scheduler] Post 24 completed successfully
+[AutoReply] Checking for new comments...
+[AutoReply] Error processing post 18083942995994534: Get replies failed: Unsupported get request. Object with ID '18083942995994534' does not exist, cannot be loaded due to missing permissions, or does not support this operation
+[QueueWorker] Checking content queue schedules...
+[AutoReply] Checking for new comments...
+[AutoReply] Error processing post 18083942995994534: Get replies failed: Unsupported get request. Object with ID '18083942995994534' does not exist, cannot be loaded due to missing permissions, or does not support this operation
+[AutoReply] Checking for new comments...
+[AutoReply] Error processing post 18083942995994534: Get replies failed: Unsupported get request. Object with ID '18083942995994534' does not exist, cannot be loaded due to missing permissions, or does not support this operation
+
+🛑 Shutting down gracefully...
+✅ Server closed.
+
+> threadsbot@1.0.0 start
+> node server.js
+
+[dotenv@17.3.1] injecting env (4) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+Warning: connect.session() MemoryStore is not
+designed for a production environment, as it will leak
+memory, and will not scale past a single process.
+🤖 ThreadsBot running at http://localhost:5008
+[Scheduler] Initializing...
+[Scheduler] Loaded 0 pending posts
+[Scheduler] Auto-reply monitor started (every 5 min)
+[Scheduler] Token refresh job scheduled (daily 3AM)
+[Scheduler] AutoPilot monitor started (every 30 min)
+[Scheduler] Queue worker started (every 10 min)
+[QueueWorker] Checking content queue schedules...
+[AutoReply] Checking for new comments...
+[AutoReply] Error processing post 18083942995994534: Get replies failed: Unsupported get request. Object with ID '18083942995994534' does not exist, cannot be loaded due to missing permissions, or does not support this operation
+
+🛑 Shutting down gracefully...
+✅ Server closed.
+
+> threadsbot@1.0.0 start
+> node server.js
+
+[dotenv@17.3.1] injecting env (4) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+Warning: connect.session() MemoryStore is not
+designed for a production environment, as it will leak
+memory, and will not scale past a single process.
+🤖 ThreadsBot running at http://localhost:5008
+[Scheduler] Initializing...
+[Scheduler] Loaded 0 pending posts
+[Scheduler] Auto-reply monitor started (every 5 min)
+[Scheduler] Token refresh job scheduled (daily 3AM)
+[Scheduler] AutoPilot monitor started (every 30 min)
+[Scheduler] Queue worker started (every 10 min)
+
+🛑 Shutting down gracefully...
+✅ Server closed.
+
+> threadsbot@1.0.0 start
+> node server.js
+
+[dotenv@17.3.1] injecting env (4) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+Warning: connect.session() MemoryStore is not
+designed for a production environment, as it will leak
+memory, and will not scale past a single process.
+🤖 ThreadsBot running at http://localhost:5008
+[Scheduler] Initializing...
+[Scheduler] Loaded 0 pending posts
+[Scheduler] Auto-reply monitor started (every 5 min)
+[Scheduler] Token refresh job scheduled (daily 3AM)
+[Scheduler] AutoPilot monitor started (every 30 min)
+[Scheduler] Queue worker started (every 10 min)
+[AutoReply] Checking for new comments...
+[AutoReply] Error processing post 18083942995994534: Get replies failed: Unsupported get request. Object with ID '18083942995994534' does not exist, cannot be loaded due to missing permissions, or does not support this operation
+
+🛑 Shutting down gracefully...
+✅ Server closed.
+
+> threadsbot@1.0.0 start
+> node server.js
+
+[dotenv@17.3.1] injecting env (4) from .env -- tip: ⚙️  override existing env vars with { override: true }
+Warning: connect.session() MemoryStore is not
+designed for a production environment, as it will leak
+memory, and will not scale past a single process.
+🤖 ThreadsBot running at http://localhost:5008
+[Scheduler] Initializing...
+[Scheduler] Loaded 0 pending posts
+[Scheduler] Auto-reply monitor started (every 5 min)
+[Scheduler] Token refresh job scheduled (daily 3AM)
+[Scheduler] AutoPilot monitor started (every 30 min)
+[Scheduler] Queue worker started (every 10 min)
+
+🛑 Shutting down gracefully...
+✅ Server closed.
+
+> threadsbot@1.0.0 start
+> node server.js
+
+[dotenv@17.3.1] injecting env (4) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+Warning: connect.session() MemoryStore is not
+designed for a production environment, as it will leak
+memory, and will not scale past a single process.
+🤖 ThreadsBot running at http://localhost:5008
+[Scheduler] Initializing...
+[Scheduler] Loaded 0 pending posts
+[Scheduler] Auto-reply monitor started (every 5 min)
+[Scheduler] Token refresh job scheduled (daily 3AM)
+[Scheduler] AutoPilot monitor started (every 30 min)
+[Scheduler] Queue worker started (every 10 min)
+
+🛑 Shutting down gracefully...
+✅ Server closed.
+
+> threadsbot@1.0.0 start
+> node server.js
+
+[dotenv@17.3.1] injecting env (4) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+Warning: connect.session() MemoryStore is not
+designed for a production environment, as it will leak
+memory, and will not scale past a single process.
+🤖 ThreadsBot running at http://localhost:5008
+[Scheduler] Initializing...
+[Scheduler] Loaded 0 pending posts
+[Scheduler] Auto-reply monitor started (every 5 min)
+[Scheduler] Token refresh job scheduled (daily 3AM)
+[Scheduler] AutoPilot monitor started (every 30 min)
+[Scheduler] Queue worker started (every 10 min)
+[AutoReply] Checking for new comments...
+[AutoPilot] Running autopilot check...
+[QueueWorker] Checking content queue schedules...
+[AutoReply] Error processing post 18083942995994534: Get replies failed: Unsupported get request. Object with ID '18083942995994534' does not exist, cannot be loaded due to missing permissions, or does not support this operation
+
+🛑 Shutting down gracefully...
+✅ Server closed.
+
+> threadsbot@1.0.0 start
+> node server.js
+
+[dotenv@17.3.1] injecting env (4) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+Warning: connect.session() MemoryStore is not
+designed for a production environment, as it will leak
+memory, and will not scale past a single process.
+🤖 ThreadsBot running at http://localhost:5008
+[Scheduler] Initializing...
+[Scheduler] Loaded 0 pending posts
+[Scheduler] Auto-reply monitor started (every 5 min)
+[Scheduler] Token refresh job scheduled (daily 3AM)
+[Scheduler] AutoPilot monitor started (every 30 min)
+[Scheduler] Queue worker started (every 10 min)
+
+🛑 Shutting down gracefully...
+✅ Server closed.
+
+> threadsbot@1.0.0 start
+> node server.js
+
+[dotenv@17.3.1] injecting env (4) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+Warning: connect.session() MemoryStore is not
+designed for a production environment, as it will leak
+memory, and will not scale past a single process.
+🤖 ThreadsBot running at http://localhost:5008
+[Scheduler] Initializing...
+[Scheduler] Loaded 0 pending posts
+[Scheduler] Auto-reply monitor started (every 5 min)
+[Scheduler] Token refresh job scheduled (daily 3AM)
+[Scheduler] AutoPilot monitor started (every 30 min)
+[Scheduler] Queue worker started (every 10 min)
+[Error] Error: Could not find matching close tag for "<%-".
+    at /home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:682:31
+    at Array.forEach (<anonymous>)
+    at Template.generateSource (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:672:21)
+    at Template.compile (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:527:18)
+    at Object.compile (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:359:18)
+    at handleCache (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:216:16)
+    at tryHandleCache (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:253:22)
+    at ejs.renderFile [as engine] (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:444:12)
+    at View.render (/home/ubuntu/threadsbot/node_modules/express/lib/view.js:139:8)
+    at tryRender (/home/ubuntu/threadsbot/node_modules/express/lib/application.js:627:10)
+[Error] Error: Could not find matching close tag for "<%-".
+    at /home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:682:31
+    at Array.forEach (<anonymous>)
+    at Template.generateSource (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:672:21)
+    at Template.compile (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:527:18)
+    at Object.compile (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:359:18)
+    at handleCache (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:216:16)
+    at tryHandleCache (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:253:22)
+    at ejs.renderFile [as engine] (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:444:12)
+    at View.render (/home/ubuntu/threadsbot/node_modules/express/lib/view.js:139:8)
+    at tryRender (/home/ubuntu/threadsbot/node_modules/express/lib/application.js:627:10)
+
+🛑 Shutting down gracefully...
+✅ Server closed.
+
+> threadsbot@1.0.0 start
+> node server.js
+
+[dotenv@17.3.1] injecting env (4) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+Warning: connect.session() MemoryStore is not
+designed for a production environment, as it will leak
+memory, and will not scale past a single process.
+🤖 ThreadsBot running at http://localhost:5008
+[Scheduler] Initializing...
+[Scheduler] Loaded 0 pending posts
+[Scheduler] Auto-reply monitor started (every 5 min)
+[Scheduler] Token refresh job scheduled (daily 3AM)
+[Scheduler] AutoPilot monitor started (every 30 min)
+[Scheduler] Queue worker started (every 10 min)
+[Error] Error: Could not find matching close tag for "<%-".
+    at /home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:682:31
+    at Array.forEach (<anonymous>)
+    at Template.generateSource (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:672:21)
+    at Template.compile (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:527:18)
+    at Object.compile (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:359:18)
+    at handleCache (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:216:16)
+    at tryHandleCache (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:253:22)
+    at ejs.renderFile [as engine] (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:444:12)
+    at View.render (/home/ubuntu/threadsbot/node_modules/express/lib/view.js:139:8)
+    at tryRender (/home/ubuntu/threadsbot/node_modules/express/lib/application.js:627:10)
+[Error] Error: Could not find matching close tag for "<%-".
+    at /home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:682:31
+    at Array.forEach (<anonymous>)
+    at Template.generateSource (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:672:21)
+    at Template.compile (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:527:18)
+    at Object.compile (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:359:18)
+    at handleCache (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:216:16)
+    at tryHandleCache (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:253:22)
+    at ejs.renderFile [as engine] (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:444:12)
+    at View.render (/home/ubuntu/threadsbot/node_modules/express/lib/view.js:139:8)
+    at tryRender (/home/ubuntu/threadsbot/node_modules/express/lib/application.js:627:10)
+[Error] Error: Could not find matching close tag for "<%-".
+    at /home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:682:31
+    at Array.forEach (<anonymous>)
+    at Template.generateSource (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:672:21)
+    at Template.compile (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:527:18)
+    at Object.compile (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:359:18)
+    at handleCache (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:216:16)
+    at tryHandleCache (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:253:22)
+    at ejs.renderFile [as engine] (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:444:12)
+    at View.render (/home/ubuntu/threadsbot/node_modules/express/lib/view.js:139:8)
+    at tryRender (/home/ubuntu/threadsbot/node_modules/express/lib/application.js:627:10)
+
+🛑 Shutting down gracefully...
+✅ Server closed.
+
+> threadsbot@1.0.0 start
+> node server.js
+
+[dotenv@17.3.1] injecting env (4) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+Warning: connect.session() MemoryStore is not
+designed for a production environment, as it will leak
+memory, and will not scale past a single process.
+🤖 ThreadsBot running at http://localhost:5008
+[Scheduler] Initializing...
+[Scheduler] Loaded 0 pending posts
+[Scheduler] Auto-reply monitor started (every 5 min)
+[Scheduler] Token refresh job scheduled (daily 3AM)
+[Scheduler] AutoPilot monitor started (every 30 min)
+[Scheduler] Queue worker started (every 10 min)
+[Error] Error: Could not find matching close tag for "<%-".
+    at /home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:682:31
+    at Array.forEach (<anonymous>)
+    at Template.generateSource (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:672:21)
+    at Template.compile (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:527:18)
+    at Object.compile (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:359:18)
+    at handleCache (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:216:16)
+    at tryHandleCache (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:253:22)
+    at ejs.renderFile [as engine] (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:444:12)
+    at View.render (/home/ubuntu/threadsbot/node_modules/express/lib/view.js:139:8)
+    at tryRender (/home/ubuntu/threadsbot/node_modules/express/lib/application.js:627:10)
+[Error] Error: Could not find matching close tag for "<%-".
+    at /home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:682:31
+    at Array.forEach (<anonymous>)
+    at Template.generateSource (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:672:21)
+    at Template.compile (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:527:18)
+    at Object.compile (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:359:18)
+    at handleCache (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:216:16)
+    at tryHandleCache (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:253:22)
+    at ejs.renderFile [as engine] (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:444:12)
+    at View.render (/home/ubuntu/threadsbot/node_modules/express/lib/view.js:139:8)
+    at tryRender (/home/ubuntu/threadsbot/node_modules/express/lib/application.js:627:10)
+[Error] Error: Could not find matching close tag for "<%-".
+    at /home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:682:31
+    at Array.forEach (<anonymous>)
+    at Template.generateSource (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:672:21)
+    at Template.compile (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:527:18)
+    at Object.compile (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:359:18)
+    at handleCache (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:216:16)
+    at tryHandleCache (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:253:22)
+    at ejs.renderFile [as engine] (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:444:12)
+    at View.render (/home/ubuntu/threadsbot/node_modules/express/lib/view.js:139:8)
+    at tryRender (/home/ubuntu/threadsbot/node_modules/express/lib/application.js:627:10)
+[Error] Error: Could not find matching close tag for "<%-".
+    at /home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:682:31
+    at Array.forEach (<anonymous>)
+    at Template.generateSource (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:672:21)
+    at Template.compile (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:527:18)
+    at Object.compile (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:359:18)
+    at handleCache (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:216:16)
+    at tryHandleCache (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:253:22)
+    at ejs.renderFile [as engine] (/home/ubuntu/threadsbot/node_modules/ejs/lib/cjs/ejs.js:444:12)
+    at View.render (/home/ubuntu/threadsbot/node_modules/express/lib/view.js:139:8)
+    at tryRender (/home/ubuntu/threadsbot/node_modules/express/lib/application.js:627:10)
+
+🛑 Shutting down gracefully...
+✅ Server closed.
+
+> threadsbot@1.0.0 start
+> node server.js
+
+[dotenv@17.3.1] injecting env (4) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+Warning: connect.session() MemoryStore is not
+designed for a production environment, as it will leak
+memory, and will not scale past a single process.
+🤖 ThreadsBot running at http://localhost:5008
+[Scheduler] Initializing...
+[Scheduler] Loaded 0 pending posts
+[Scheduler] Auto-reply monitor started (every 5 min)
+[Scheduler] Token refresh job scheduled (daily 3AM)
+[Scheduler] AutoPilot monitor started (every 30 min)
+[Scheduler] Queue worker started (every 10 min)
+[AutoReply] Checking for new comments...
+[AutoReply] Error processing post 18083942995994534: Get replies failed: Unsupported get request. Object with ID '18083942995994534' does not exist, cannot be loaded due to missing permissions, or does not support this operation
